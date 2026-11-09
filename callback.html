@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login – JASDONE Uploader</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <a href="index.html"><div class="brand">JASDONE</div></a>
+    <div class="sub">Uploader</div>
+  </header>
+  <main>
+    <h1 id="headline">Login complete</h1>
+    <p id="info">Copy this address and paste it into the uploader to finish connecting your account.</p>
+    <textarea id="url" readonly></textarea>
+    <button id="copy" type="button">Copy</button>
+  </main>
+  <nav><a href="terms.html">Terms of Service</a> · <a href="privacy.html">Privacy Policy</a></nav>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const field = document.getElementById("url");
+    field.value = location.href;
+    if (params.get("error")) {
+      document.getElementById("headline").textContent = "Login failed";
+      document.getElementById("info").textContent =
+        "TikTok reported: " + (params.get("error_description") || params.get("error"));
+    } else if (!params.get("code")) {
+      document.getElementById("headline").textContent = "No login code";
+      document.getElementById("info").textContent = "Open this page through the TikTok login.";
+    }
+    document.getElementById("copy").addEventListener("click", async () => {
+      field.select();
+      try { await navigator.clipboard.writeText(field.value); } catch (e) { document.execCommand("copy"); }
+      document.getElementById("copy").textContent = "Copied ✓";
+    });
+  </script>
+</body>
+</html>
