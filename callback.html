@@ -16,6 +16,7 @@
     <p id="info">Copy this address and paste it into the uploader to finish connecting your account.</p>
     <textarea id="url" readonly></textarea>
     <button id="copy" type="button">Copy</button>
+    <p><a id="back" href="#">Im Uploader öffnen (Heimnetz) →</a></p>
   </main>
   <nav><a href="terms.html">Terms of Service</a> · <a href="privacy.html">Privacy Policy</a></nav>
   <script>
@@ -30,6 +31,7 @@
       document.getElementById("headline").textContent = "No login code";
       document.getElementById("info").textContent = "Open this page through the TikTok login.";
     }
+    document.getElementById("back").href = "http://192.168.188.21:8090/tiktok/callback" + location.search;
     document.getElementById("copy").addEventListener("click", async () => {
       field.select();
       try { await navigator.clipboard.writeText(field.value); } catch (e) { document.execCommand("copy"); }
